@@ -138,7 +138,7 @@ shuffledLib.map(function (item) {
           clicked[0].innerHTML = ""
           clicked[1].innerHTML = ""
           clicked = []
-        }, 1000)
+        }, 700)
 
         lives--
         document.getElementById(
@@ -146,7 +146,7 @@ shuffledLib.map(function (item) {
         ).innerHTML = `<h1>Tries Left: ${lives}</h1>`
         icon = []
         if (lives === 0) {
-          alert("lose condition")
+          loseScreen()
         }
       }
     }
@@ -156,6 +156,12 @@ shuffledLib.map(function (item) {
 function resetIcons() {
   clicked[0].innerHTML = ""
   clicked[1].innerHTML = ""
+}
+
+function loseScreen() {
+  document.querySelector(
+    "body"
+  ).innerHTML = `<div class="center"><h1>You Lose</h1></div>`
 }
 //CLICK 2 BOXES
 //CHECK IF CLICKED
