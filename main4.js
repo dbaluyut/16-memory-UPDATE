@@ -1,6 +1,7 @@
 //LIB TO BE SET OF IMGS LATER
 let lives = 8
 let lib = [1, 2, 1, 2, 3, 3, 4, 4]
+let matchedBoxes = 0
 
 //NEW LIB WITH OBJECTS
 // let lib2 = [
@@ -51,45 +52,39 @@ shuffledLib.map(function (item) {
     //NEED TO CHECK IF ITEMS CLICKED MATCH
     let isBox = e.target.classList.contains("box")
     //IF CLICKED INSIDE BOX ADD CLICKED CLASS
-    if (isBox) {
+
+    if (
+      isBox &&
+      !e.target.classList.contains("match") &&
+      !e.target.classList.contains("clicked")
+    ) {
       e.target.classList.add("clicked")
-
-      let clickedTwo = document.querySelectorAll(".clicked")
-      //IF 2 BOXES ARE CLICKED CHECK IF THEY MATCH
-      if (clickedTwo.length === 2) {
-        //CHECK IF BELOW MATCHES
-
-        console.log(clickedTwo[0].id)
-        console.log(clickedTwo[1].id)
-        if (clickedTwo[0].id == clickedTwo[1].id) {
-          clickedTwo[0].classList.add("match")
-          clickedTwo[1].classList.add("match")
+      clicked.push(e.target)
+      if (clicked[0].id === clicked[1].id && clicked.length === 2) {
+        clicked[0].classList.add("match")
+        clicked[1].classList.add("match")
+        clicked[0].classList.remove("clicked")
+        clicked[1].classList.remove("clicked")
+        clicked = []
+        matchedBoxes += 2
+        if (matchedBoxes === lib.length) {
+          alert("win condition")
         }
-
-        // if(clickedTwo[0].innerText)
-      } else if (
-        //IF THEY DONT MATCH RUN THIS
-        // document.querySelectorAll(".clicked").length > 2
-        clickedTwo.length === 2 &&
-        clickedTwo[0].id !== clickedTwo[1].id
-      ) {
-        console.log(match)
-        let test = document.querySelectorAll(".clicked")
-        //FOR LOOP TO REMOVE CLICKED CLASS FROM ALL
-        for (let i = 0; i < test.length; i++) {
-          test[i].classList.remove("clicked")
+      } else if (clicked[0] !== clicked[1] && clicked.length === 2) {
+        clicked[0].classList.remove("clicked")
+        clicked[1].classList.remove("clicked")
+        console.log(clicked)
+        lives--
+        clicked = []
+        if (lives === 0) {
+          alert("lose condition")
         }
       }
     }
   })
 })
-
 //CLICK 2 BOXES
 //CHECK IF CLICKED
 //ADD CLICKED
 //MATCH INNERTEXT
 //IF CLICKED TRUE
-
-function changeColor(selection) {
-  selection.style.backgroundColor = "red"
-}

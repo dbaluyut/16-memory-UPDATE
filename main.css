@@ -1,4 +1,7 @@
 .box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100px;
   width: 100px;
   border: 1px solid red;
@@ -7,8 +10,35 @@
 
 .container {
   width: 600px;
-  padding: 10px
+  padding: 10px;
   border: 1px solid blue;
   display: flex;
   flex-wrap: wrap;
+}
+
+.clicked {
+  background-color: blue;
+}
+
+.match {
+  background-color: green;
+}
+
+.hidden {
+  /* color: rgb(48, 48, 48); */
+  /* display: none; */
+  color: blue;
+}
+
+.show {
+  opacity: 1;
+}
+
+#icon {
+  font-size: 3rem;
+}
+
+body {
+  background-color: rgb(48, 48, 48);
+  color: white;
 }
