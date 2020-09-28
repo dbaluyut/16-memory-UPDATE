@@ -4,10 +4,72 @@ let lib = [1, 2, 1, 2, 3, 3, 4, 4]
 let matchedBoxes = 0
 
 //NEW LIB WITH OBJECTS
-// let lib2 = [
-//   { id: 1, icon: `<i class="fab fa-500px"></i>` },
-//   { id: 2, icon: `<i class="fab fa-500px"></i>` },
-// ]
+let lib2 = [
+  {
+    id: 1,
+    icon: `<img src="https://octodex.github.com/images/Terracottocat_Single.png" alt="">`,
+  },
+  {
+    id: 2,
+    icon: `<img src="https://octodex.github.com/images/luchadortocat.png" alt="">`,
+  },
+  {
+    id: 3,
+    icon: `<img src="https://octodex.github.com/images/vinyltocat.png" alt="">`,
+  },
+  {
+    id: 4,
+    icon: `<img src="https://octodex.github.com/images/inflatocat.png" alt="">`,
+  },
+  {
+    id: 1,
+    icon: `<img src="https://octodex.github.com/images/Terracottocat_Single.png" alt="">`,
+  },
+  {
+    id: 2,
+    icon: `<img src="https://octodex.github.com/images/luchadortocat.png" alt="">`,
+  },
+  {
+    id: 3,
+    icon: `<img src="https://octodex.github.com/images/vinyltocat.png" alt="">`,
+  },
+  {
+    id: 4,
+    icon: `<img src="https://octodex.github.com/images/inflatocat.png" alt="">`,
+  },
+  {
+    id: 5,
+    icon: `<img src="https://octodex.github.com/images/yaktocat.png" alt="">`,
+  },
+  {
+    id: 5,
+    icon: `<img src="https://octodex.github.com/images/yaktocat.png" alt="">`,
+  },
+  {
+    id: 6,
+    icon: `<img src="https://octodex.github.com/images/daftpunktocat-thomas.gif" alt="">`,
+  },
+  {
+    id: 6,
+    icon: `<img src="https://octodex.github.com/images/daftpunktocat-thomas.gif" alt="">`,
+  },
+  {
+    id: 7,
+    icon: `<img src="https://octodex.github.com/images/Robotocat.png" alt="">`,
+  },
+  {
+    id: 7,
+    icon: `<img src="https://octodex.github.com/images/Robotocat.png" alt="">`,
+  },
+  {
+    id: 8,
+    icon: `<img src="https://octodex.github.com/images/spidertocat.png" alt="">`,
+  },
+  {
+    id: 8,
+    icon: `<img src="https://octodex.github.com/images/spidertocat.png" alt="">`,
+  },
+]
 
 // let arrTest = lib
 
@@ -31,7 +93,7 @@ let shuffle = function (array) {
   return array
 }
 
-let shuffledLib = shuffle(lib)
+let shuffledLib = shuffle(lib2)
 // console.log(shuffledLib)
 let htmlString = []
 //INJECT BOXES TO HTML
@@ -40,11 +102,14 @@ let match = false
 
 let clicked = []
 
+let icon = []
+
 shuffledLib.map(function (item) {
   //CREATE ELEMENT IN HTML
   let div = document.createElement("div")
-  div.id = `box${item}`
-  div.innerHTML = `<h1 class="hidden">${item}</h1>`
+  div.id = `box${item.id}`
+  // div.innerHTML = `<h1 class="hidden">${item}</h1>`
+  div.setAttribute("href", `${item.icon}`)
   div.classList.add("box")
   document.querySelector(".container").appendChild(div)
   //ADDEVENT LISTENER FOR ALL ELEMENTS
@@ -53,29 +118,33 @@ shuffledLib.map(function (item) {
     let isBox = e.target.classList.contains("box")
     //IF CLICKED INSIDE BOX ADD CLICKED CLASS
 
-    if (
-      isBox &&
-      !e.target.classList.contains("match") &&
-      !e.target.classList.contains("clicked")
-    ) {
-      e.target.classList.add("clicked")
+    if (isBox && e.target.innerHTML === "") {
+      // e.target.classList.add("clicked")
       clicked.push(e.target)
+      icon.push(e.target.getAttribute("href"))
+      e.target.innerHTML = e.target.getAttribute("href")
+      // e.target.innerHTML = icon
       if (clicked[0].id === clicked[1].id && clicked.length === 2) {
-        clicked[0].classList.add("match")
-        clicked[1].classList.add("match")
-        clicked[0].classList.remove("clicked")
-        clicked[1].classList.remove("clicked")
         clicked = []
+        icon = []
         matchedBoxes += 2
         if (matchedBoxes === lib.length) {
           alert("win condition")
         }
       } else if (clicked[0] !== clicked[1] && clicked.length === 2) {
-        clicked[0].classList.remove("clicked")
-        clicked[1].classList.remove("clicked")
-        console.log(clicked)
+        // clicked[0].innerHTML = ""
+        // clicked[1].innerHTML = ""
+        setTimeout(function clear() {
+          clicked[0].innerHTML = ""
+          clicked[1].innerHTML = ""
+          clicked = []
+        }, 1000)
+
         lives--
-        clicked = []
+        document.getElementById(
+          "lives"
+        ).innerHTML = `<h1>Tries Left: ${lives}</h1>`
+        icon = []
         if (lives === 0) {
           alert("lose condition")
         }
@@ -83,6 +152,11 @@ shuffledLib.map(function (item) {
     }
   })
 })
+
+function resetIcons() {
+  clicked[0].innerHTML = ""
+  clicked[1].innerHTML = ""
+}
 //CLICK 2 BOXES
 //CHECK IF CLICKED
 //ADD CLICKED
